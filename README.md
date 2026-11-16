@@ -2,7 +2,7 @@
 
 ## **1. Première partie**
 
-### 1.0 Installation des outils
+### 1.0 Préambule / Installation des outils
 
 Installation d'Apache Jena Fuseki pour héberger et interroger les données RDF via des requêtes SPARQL. 
 Utilisation de tarql pour convertir des données tabulaires .CSV en données RDF à l'aide de requêtes SPARQL.
@@ -11,7 +11,6 @@ L'IA (ChatGPT, [Claude Opus 5.5](https://claude.com/) a pu être utilisée ponct
 ### 1.1 Conversion JSON en CSV
 
 Conversion du fichier artists.json (de base) en un fichier CSV exploitable par tarsQL à l'aide du PowerShell Windows :
-
 
 ```PowerShell
 Get-Content -Path "artists.json" -Encoding UTF8 | ConvertFrom-Json | ForEach-Object { $_ } | Export-Csv -Path "artistsRaw.csv" -NoTypeInformation -Encoding UTF8 
