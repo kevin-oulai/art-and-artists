@@ -4,10 +4,11 @@
 
 ### 1.0 Installation des outils
 
-Installation du serveur Fuseki, et de tarql pour convertir le fichier CSV en RDF.
+Installation d'Apache Jena Fuseki pour héberger et interroger les données RDF via des requêtes SPARQL. 
+Utilisation de tarql pour convertir des données tabulaires .CSV en données RDF à l'aide de requêtes SPARQL.
+L'IA (ChatGPT, [Claude Opus 5.5](https://claude.com/) a pu être utilisée ponctuellement comme outil d'assistance afin de débloquer certaines situations, notamment pour des rappels de syntaxe Python et PowerShell, ou des tournures de phrase.
 
 ### 1.1 Conversion JSON en CSV
-
 
 Conversion du fichier artists.json (de base) en un fichier CSV exploitable par tarsQL à l'aide du PowerShell Windows :
 
