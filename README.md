@@ -104,7 +104,7 @@ WHERE {
 
 Enfin nous créons le mapping de la table de liaison, dont les IRI des artists sont construits comme pour le fichier des artistes
 
-```
+```turtle <!-- Code en sparql, déclaré en turtle uniquement pour la coloration syntaxique approximative dans le Markdown -->
 PREFIX schema: <https://schema.org/>
 
 CONSTRUCT { ?oeuvre schema:creator ?artiste . }
