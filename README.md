@@ -57,11 +57,12 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 CONSTRUCT {
     ?artiste a schema:Person;
-            foaf:name ?nom;
-            foaf:gender ?genre;
-            schema:birthDate ?dateDeNaissance;
-            schema:deathDate ?dateDeMort;
-            schema:nationality ?nationalite.
+             foaf:name ?nom;
+             foaf:gender ?genre;
+             schema:birthDate ?dateDeNaissance;
+             schema:deathDate ?dateDeMort;
+             schema:nationality ?nationalite;
+             owl:sameAs ?ulan_uri.
 }
 WHERE {
     BIND(IRI(CONCAT("http://www.wikidata.org/entity/", STR(?Wiki_QID))) AS ?artiste)
@@ -70,6 +71,7 @@ WHERE {
     BIND(STR(?BeginDate) AS ?dateDeNaissance)
     BIND(STR(?EndDate) AS ?dateDeMort)    
     BIND(STR(?Nationality) AS ?nationalite)
+    BIND(IRI(CONCAT("http://vocab.getty.edu/ulan/", STR(?ULAN))) AS ?ulan_uri)
 }
 ```
 
