@@ -119,11 +119,12 @@ WHERE {
 
 La première requêtes intéressante consiste à voir la répartion des nationalités au sein du jeu de données :
 
-```turtle <!-- Code en sparql, déclaré turtle uniquement pour la coloration approximative du code dans le markdown -->
+```turtle <!-- Code en sparql, déclaré en turtle uniquement pour la coloration syntaxique approximative dans le Markdown -->
 PREFIX schema: <https://schema.org/>
 
 SELECT ?nationalite (COUNT(DISTINCT ?artiste) AS ?nbArtistes)
-WHERE {
+WHERE
+{
     ?artiste schema:nationality ?nationalite.
 }
 GROUP BY ?nationalite ORDER BY DESC(?nbArtistes) LIMIT 10
@@ -131,16 +132,15 @@ GROUP BY ?nationalite ORDER BY DESC(?nbArtistes) LIMIT 10
 
 La deuxième requête intéressante consiste à analyser la parité entre les artistes : 
 
-```turtle <!-- Code en sparql, déclaré turtle uniquement pour la coloration approximative du code dans le markdown -->
+```turtle <!-- Code en sparql, déclaré en turtle uniquement pour la coloration syntaxique approximative dans le Markdown -->
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
-SELECT ?genre (COUNT(DISTINCT ?artiste) AS ?nombreArtistes)
-WHERE {
-    ?artiste foaf:name ?nom .
-    ?artiste foaf:gender ?genre .
+SELECT ?genre (COUNT(DISTINCT ?artiste) AS ?nbArtistes)
+WHERE
+{
+    ?artiste foaf:gender ?genre.
 }
-GROUP BY ?genre
-ORDER BY DESC(?nombreArtistes)
+GROUP BY ?genre ORDER BY DESC(?nbArtistes)
 ```
 
 Nous pouvons également croiser oeuvres et artistes, par exemple en regardant les couples d'artistes ayant signés le plus d'oeuvres ensemble :
