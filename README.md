@@ -34,7 +34,7 @@ data = data.rename(columns={"Wiki QID": "Wiki_QID"})
 data.to_csv("artistsCleaned.csv")
 ```
 
-Pour la partie oeuvres d'art, on procède de cette façon :
+Pour la partie oeuvres d'art, on procède de cette façon (étape réalisée avec [Claude Opus 5.5](https://claude.com/) pour la syntaxe Python) :
 - Suppression des colonnes artiste du fichier (Gender, Nationality, BeginDate…) car elles sont déjà disponibles dans le fichier des artistes
 - Création d'une table de liason entre artistes et oeuvres d'art via la propriété WIKI_QID
 

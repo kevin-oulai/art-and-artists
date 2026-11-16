@@ -1,3 +1,6 @@
+PREFIX foaf:   <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+
 SELECT ?nom1 ?nom2 (COUNT(?o) AS ?nb)
 WHERE {
   ?o schema:creator ?a1, ?a2 .
