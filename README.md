@@ -57,11 +57,11 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 CONSTRUCT {
     ?artiste a schema:Person;
-        foaf:name ?nom;
-        foaf:gender ?genre;
-        schema:birthDate ?dateDeNaissance;
-        schema:deathDate ?dateDeMort;
-        schema:nationality ?nationalite.
+            foaf:name ?nom;
+            foaf:gender ?genre;
+            schema:birthDate ?dateDeNaissance;
+            schema:deathDate ?dateDeMort;
+            schema:nationality ?nationalite.
 }
 WHERE {
     BIND(IRI(CONCAT("http://www.wikidata.org/entity/", STR(?Wiki_QID))) AS ?artiste)
@@ -119,18 +119,14 @@ WHERE {
 
 La première requêtes intéressante consiste à voir la répartion des nationalités au sein du jeu de données :
 
-```
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+```turtle
 PREFIX schema: <https://schema.org/>
 
-SELECT ?nationalite (COUNT(DISTINCT ?artiste) AS ?nombreArtistes)
+SELECT ?nationalite (COUNT(DISTINCT ?artiste) AS ?nbArtistes)
 WHERE {
-    ?artiste foaf:name ?nom;
-    schema:nationality ?nationalite.
+    ?artiste schema:nationality ?nationalite.
 }
-GROUP BY ?nationalite
-ORDER BY DESC(?nombreArtistes)
-LIMIT 10
+GROUP BY ?nationalite ORDER BY DESC(?nbArtistes) LIMIT 10
 ```
 
 La deuxième requête intéressante consiste à analyser la parité entre les artistes : 
