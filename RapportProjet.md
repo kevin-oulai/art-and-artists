@@ -1,4 +1,4 @@
-# Projet Dana | Groupe Caz, Oulai, 
+# Projet Dana | Groupe CAZ, OULAI, ATTEYEH ABI
 
 ## **1. Première partie**
 
