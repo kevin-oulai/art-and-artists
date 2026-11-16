@@ -19,7 +19,7 @@ Get-Content -Path "artists.json" -Encoding UTF8 | ConvertFrom-Json | ForEach-Obj
 
 ### 1.2 Nettoyage des .CSV à l'aide de Python (Pandas)
 
-Une fois le fichier des artistes converti, on procède à un nettoyage à l'aide d'un script python (réalisé avec l'appuie de l'IA) et de la librarie Pandas : 
+Une fois le fichier des artistes converti, on procède à un nettoyage à l'aide d'un script python et de la librairie Pandas : 
 - Suppresion de la colonne "artistBio" dont le contenu est un double d'autres colonnes.
 - Suppression des lignes dont une ou plusieurs colonnes sont vides.
 - Suppression des lignes où les colonnes "BeginDate" et "EndDate" ont une valeur égale à 0.
