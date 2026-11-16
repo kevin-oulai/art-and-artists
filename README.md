@@ -119,7 +119,7 @@ WHERE {
 
 La première requêtes intéressante consiste à voir la répartion des nationalités au sein du jeu de données :
 
-```turtle
+```turtle <!-- Code en sparql, déclaré turtle uniquement pour la coloration approximative du code dans le markdown -->
 PREFIX schema: <https://schema.org/>
 
 SELECT ?nationalite (COUNT(DISTINCT ?artiste) AS ?nbArtistes)
@@ -131,7 +131,7 @@ GROUP BY ?nationalite ORDER BY DESC(?nbArtistes) LIMIT 10
 
 La deuxième requête intéressante consiste à analyser la parité entre les artistes : 
 
-```
+```turtle <!-- Code en sparql, déclaré turtle uniquement pour la coloration approximative du code dans le markdown -->
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
 SELECT ?genre (COUNT(DISTINCT ?artiste) AS ?nombreArtistes)
