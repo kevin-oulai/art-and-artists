@@ -147,7 +147,7 @@ GROUP BY ?genre
 ORDER BY DESC(?nombreArtistes)
 ```
 
-Nous pouvons également croiser oeuvres et artistes, par exemple en regardant le couple d'artistes ayant signé le plus d'oeuvres ensembles :
+Nous pouvons également croiser oeuvres et artistes, par exemple en regardant les couples d'artistes ayant signés le plus d'oeuvres ensemble :
 
 ```
 SELECT ?nom1 ?nom2 (COUNT(?o) AS ?nb)
@@ -159,7 +159,7 @@ WHERE {
 GROUP BY ?nom1 ?nom2 ORDER BY DESC(?nb) LIMIT 20
 ```
 
-Ou en remarquant le nombre d'oeuvre ayant été publiée à titre posthume de l'artiste :
+Ou en remarquant le nombre d'oeuvres ayant été publiées à titre posthume de l'artiste :
 
 ```
 SELECT ?nom ?titre ?annee ?mort
