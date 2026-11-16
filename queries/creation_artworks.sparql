@@ -1,0 +1,21 @@
+PREFIX schema: <https://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+  ?oeuvre a schema:VisualArtwork ;
+      schema:name ?titre ;
+      schema:dateCreated ?annee ;
+      schema:artMedium ?medium ;
+      schema:artform ?classification ;
+      schema:height ?hauteur ;
+      schema:width ?largeur .
+}
+WHERE {
+  BIND(IRI(CONCAT("https://www.moma.org/collection/works/", STR(?ObjectID))) AS ?oeuvre)
+  BIND(STR(?Title) AS ?titre)
+  BIND(xsd:integer(?YearStart) AS ?annee)
+  BIND(STR(?Medium) AS ?medium)
+  BIND(STR(?Classification) AS ?classification)
+  BIND(xsd:decimal(?HeightCm) AS ?hauteur)
+  BIND(xsd:decimal(?WidthCm) AS ?largeur)
+}

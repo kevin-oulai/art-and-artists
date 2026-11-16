@@ -1,0 +1,8 @@
+PREFIX schema: <https://schema.org/>
+
+CONSTRUCT { ?oeuvre schema:creator ?artiste . }
+WHERE {
+  FILTER(BOUND(?Wiki_QID) && ?Wiki_QID != "")
+  BIND(IRI(CONCAT("https://www.moma.org/collection/works/", STR(?ObjectID))) AS ?oeuvre)
+  BIND(IRI(CONCAT("http://www.wikidata.org/entity/", STR(?Wiki_QID))) AS ?artiste)
+}
