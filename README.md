@@ -16,9 +16,9 @@ Conversion du fichier artists.json (de base) en un fichier CSV exploitable par t
 Get-Content -Path "artists.json" -Encoding UTF8 | ConvertFrom-Json | ForEach-Object { $_ } | Export-Csv -Path "artistsRaw.csv" -NoTypeInformation -Encoding UTF8 
 ```
 
-### 1.2 Nettoyage du .CSV à l'aide de Python (Pandas)
+### 1.2 Nettoyage des .CSV à l'aide de Python (Pandas)
 
-Une fois le fichier converti, on procède à un nettoyage à l'aide d'un script python et de la librarie Pandas : 
+Une fois le fichier des artistes converti, on procède à un nettoyage à l'aide d'un script python et de la librarie Pandas : 
 - Suppresion de la colonne "artistBio" dont le contenu est un double d'autres colonnes.
 - Suppression des lignes dont une ou plusieurs colonnes sont vides.
 - Suppression des lignes où les colonnes "BeginDate" et "EndDate" ont une valeur égale à 0.
@@ -33,6 +33,10 @@ data = data[data["EndDate"] != 0]
 data = data.rename(columns={"Wiki QID": "Wiki_QID"})
 data.to_csv("artistsCleaned.csv")
 ```
+
+Pour la partie oeuvres d'art, on procède de cette façon :
+- Suppression des colonnes artiste du fichier (Gender, Nationality, BeginDate…) car elles sont déjà disponibles dans le fichier des artistes
+- Création d'une table de liason entre artistes et oeuvres d'art via la propriété WIKI_QID
 
 ## **2. Seconde partie**
 
@@ -68,6 +72,49 @@ WHERE {
     BIND(STR(?Nationality) AS ?nationalite)
 }
 ```
+
+Nous avons par la suite créé les oeuvres d'arts sous le type VisualArtwork, avec les attributs suivants :
+- `schema:name` et `schema:dateCreated` pour les colonnes `titre` et `annee`.
+- `schema:artMedium` et `schema:artform` pour le `medium` et la `classification`.
+- `schema:height` et `schema:width` représentant les colonnes `hauteur` et `largeur`.
+
+```
+PREFIX schema: <https://schema.org/>
+PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+  ?oeuvre a schema:VisualArtwork ;
+      schema:name ?titre ;
+      schema:dateCreated ?annee ;
+      schema:artMedium ?medium ;
+      schema:artform ?classification ;
+      schema:height ?hauteur ;
+      schema:width ?largeur .
+}
+WHERE {
+  BIND(IRI(CONCAT("https://www.moma.org/collection/works/", STR(?ObjectID))) AS ?oeuvre)
+  BIND(STR(?Title) AS ?titre)
+  BIND(xsd:integer(?YearStart) AS ?annee)
+  BIND(STR(?Medium) AS ?medium)
+  BIND(STR(?Classification) AS ?classification)
+  BIND(xsd:decimal(?HeightCm) AS ?hauteur)
+  BIND(xsd:decimal(?WidthCm) AS ?largeur)
+}
+```
+
+Enfin nous créons le mapping de la table de liaison, dont les IRI des artists sont construits comme pour le fichier des artistes
+
+```
+PREFIX schema: <https://schema.org/>
+
+CONSTRUCT { ?oeuvre schema:creator ?artiste . }
+WHERE {
+  FILTER(BOUND(?Wiki_QID) && ?Wiki_QID != "")
+  BIND(IRI(CONCAT("https://www.moma.org/collection/works/", STR(?ObjectID))) AS ?oeuvre)
+  BIND(IRI(CONCAT("http://www.wikidata.org/entity/", STR(?Wiki_QID))) AS ?artiste)
+}
+```
+
 ### 2.1 Requêtes "intéressantes"
 
 La première requêtes intéressante consiste à voir la répartion des nationalités au sein du jeu de données :
@@ -98,4 +145,27 @@ WHERE {
 }
 GROUP BY ?genre
 ORDER BY DESC(?nombreArtistes)
+```
+
+Nous pouvons également croiser oeuvres et artistes, par exemple en regardant le couple d'artistes ayant signé le plus d'oeuvres ensembles :
+
+```
+SELECT ?nom1 ?nom2 (COUNT(?o) AS ?nb)
+WHERE {
+  ?o schema:creator ?a1, ?a2 .
+  ?a1 foaf:name ?nom1 . ?a2 foaf:name ?nom2 .
+  FILTER(STR(?a1) < STR(?a2))
+}
+GROUP BY ?nom1 ?nom2 ORDER BY DESC(?nb) LIMIT 20
+```
+
+Ou en remarquant le nombre d'oeuvre ayant été publiée à titre posthume de l'artiste :
+
+```
+SELECT ?nom ?titre ?annee ?mort
+WHERE {
+  ?o schema:creator ?a ; schema:name ?titre ; schema:dateCreated ?annee .
+  ?a foaf:name ?nom ; schema:deathDate ?mort .
+  FILTER(xsd:integer(?mort) > 0 && ?annee > xsd:integer(?mort))
+}
 ```

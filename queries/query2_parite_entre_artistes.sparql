@@ -1,0 +1,9 @@
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+SELECT ?genre (COUNT(DISTINCT ?artiste) AS ?nombreArtistes)
+WHERE {
+    ?artiste foaf:name ?nom.
+    ?artiste foaf:gender ?genre.
+}
+GROUP BY ?genre
+ORDER BY DESC(?nombreArtistes)

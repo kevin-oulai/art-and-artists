@@ -1,0 +1,6 @@
+SELECT ?nom ?titre ?annee ?mort
+WHERE {
+  ?o schema:creator ?a ; schema:name ?titre ; schema:dateCreated ?annee .
+  ?a foaf:name ?nom ; schema:deathDate ?mort .
+  FILTER(xsd:integer(?mort) > 0 && ?annee > xsd:integer(?mort))
+}

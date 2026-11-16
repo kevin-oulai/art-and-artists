@@ -1,0 +1,11 @@
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <https://schema.org/>
+
+SELECT ?nationalite (COUNT(DISTINCT ?artiste) AS ?nombreArtistes)
+WHERE {
+    ?artiste foaf:name ?nom;
+    schema:nationality ?nationalite.
+}
+GROUP BY ?nationalite
+ORDER BY DESC(?nombreArtistes)
+LIMIT 10

@@ -1,0 +1,7 @@
+SELECT ?nom1 ?nom2 (COUNT(?o) AS ?nb)
+WHERE {
+  ?o schema:creator ?a1, ?a2 .
+  ?a1 foaf:name ?nom1 . ?a2 foaf:name ?nom2 .
+  FILTER(STR(?a1) < STR(?a2))
+}
+GROUP BY ?nom1 ?nom2 ORDER BY DESC(?nb) LIMIT 20
