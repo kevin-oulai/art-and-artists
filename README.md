@@ -50,7 +50,7 @@ Au regard de notre jeu de données, nous avons décidé de créer plusieurs arti
 
 
 Ci-dessous le script de création sparql :
-```
+```turtle <!-- Code en sparql, déclaré en turtle uniquement pour la coloration syntaxique approximative dans le Markdown -->
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX schema: <https://schema.org/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -78,7 +78,7 @@ Nous avons par la suite créé les oeuvres d'arts sous le type VisualArtwork, av
 - `schema:artMedium` et `schema:artform` pour le `medium` et la `classification`.
 - `schema:height` et `schema:width` représentant les colonnes `hauteur` et `largeur`.
 
-```
+```turtle <!-- Code en sparql, déclaré en turtle uniquement pour la coloration syntaxique approximative dans le Markdown -->
 PREFIX schema: <https://schema.org/>
 PREFIX xsd:    <http://www.w3.org/2001/XMLSchema#>
 
@@ -145,7 +145,7 @@ GROUP BY ?genre ORDER BY DESC(?nbArtistes)
 
 Nous pouvons également croiser oeuvres et artistes, par exemple en regardant les couples d'artistes ayant signés le plus d'oeuvres ensemble :
 
-```
+```turtle <!-- Code en sparql, déclaré en turtle uniquement pour la coloration syntaxique approximative dans le Markdown -->
 SELECT ?nom1 ?nom2 (COUNT(?o) AS ?nb)
 WHERE {
   ?o schema:creator ?a1, ?a2 .
@@ -157,7 +157,7 @@ GROUP BY ?nom1 ?nom2 ORDER BY DESC(?nb) LIMIT 20
 
 Ou en remarquant le nombre d'oeuvres ayant été publiées à titre posthume de l'artiste :
 
-```
+```turtle <!-- Code en sparql, déclaré en turtle uniquement pour la coloration syntaxique approximative dans le Markdown -->
 SELECT ?nom ?titre ?annee ?mort
 WHERE {
   ?o schema:creator ?a ; schema:name ?titre ; schema:dateCreated ?annee .
